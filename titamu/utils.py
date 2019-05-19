@@ -29,8 +29,8 @@ class Connect:
 
 class Output:
     # A class that uses pretty table to output. It needs two parameters:
-    # fields: table column
-    # rows: the actual values that fills the table
+    # fields: table column - 1-dimension list
+    # rows: the actual values that fills the table - 2-dimension list
     def __init__(self, fields, rows):
         self.pt = PrettyTable()
         self.pt.field_names = fields
