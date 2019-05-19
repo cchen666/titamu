@@ -1,0 +1,2 @@
+ovirt-engine-sdk-python >= 4.2.9   
+prettytable             >= 0.7.2   
