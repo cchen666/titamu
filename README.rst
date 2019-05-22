@@ -7,15 +7,15 @@ README
 
 ::
 
-   pip install titamu-rhv --user
+   pip install titamu --user
 
 or
 
 ::
 
-   virtualenv ~/titamu-rhv
-   cd ~/titamu-rhv
-   pip install titamu-rhv
+   virtualenv ~/titamu
+   cd ~/titamu
+   pip install titamu
    ln -s ~/titamu-rhv/titamu/bin/titamu /usr/local/bin/titamu
 
 2. pycurl (which is one of the dependencies) is not easy to install and the errors could be quite different for both MacOS and Linux. Use google :)
