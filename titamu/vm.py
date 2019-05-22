@@ -131,20 +131,38 @@ class VmOps:
                 (c for c in consoles if c.protocol == types.GraphicsType.VNC),
                 None
             )
-            console_service = consoles_service.console_service(console.id)
-            # cchen: If the password contains "/" then the console can not be opened.
-            while 1:
-                ticket = console_service.ticket()
-                if "/" not in ticket.value:
-                    break
-            try:
-                vnc_url = "vnc://:%s@%s:%d" % (ticket.value, console.address, console.port)
-                subprocess.call(["/usr/bin/open", vnc_url])
-            except IOError as ioerr:
-                print "Can not open console.vv %s" % str(ioerr)
-            print("address: %s" % console.address)
-            print("port: %s" % console.port)
-            print("password: %s" % ticket.value)
+            if console is not None:
+                # cchen: VNC found and usually we use VNC for our VM display because spice doesn't
+                # work sometimes
+                console_service = consoles_service.console_service(console.id)
+                # cchen: If the password contains "/" then the console can not be opened.
+                while 1:
+                    ticket = console_service.ticket()
+                    if "/" not in ticket.value:
+                        break
+                try:
+                    vnc_url = "vnc://:%s@%s:%d" % (ticket.value, console.address, console.port)
+                    subprocess.call(["/usr/bin/open", vnc_url])
+                except IOError as ioerr:
+                    print "Can not open console.vv %s" % str(ioerr)
+            elif console is None:
+                # VNC didn't find so the console might be spice
+                console = next(
+                    (c for c in consoles if c.protocol == types.GraphicsType.SPICE),
+                    None
+                )
+                if console is not None:
+                    console_service = consoles_service.console_service(console.id)
+                    # cchen: Simply call the remote_viewer_connection_file function to get console.vv
+                    console_vv = console_service.remote_viewer_connection_file()
+                    path = "/tmp/console.vv"
+                    with open(path, "w") as f:
+                        f.write(console_vv)
+                    try:
+                        subprocess.call('remote-viewer /tmp/console.vv 2>/dev/null', shell=True)
+                    except OSError as err:
+                        print "Unable to locate remote-viewer application: %s" % err
+
             self.c.close()
         except sdk.Error as err:
             print str(err)
