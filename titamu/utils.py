@@ -1,4 +1,5 @@
 import ovirtsdk4 as sdk
+import sys
 from os import environ
 from prettytable import PrettyTable
 
@@ -6,18 +7,30 @@ from prettytable import PrettyTable
 class Connect:
     def __init__(self):
         # Sample environment variables that you should set
-        # export TITAN_URL='https://lab-rhevm.microsoft.rdu.com/ovirt-engine/api'
-        # export TITAN_USERNAME='adminuser@your_domain'
-        # export TITAN_PASSWORD='password'
-        # export TITAN_CA_FILE='ca.pem'
-        # export TITAN_VM_PREFIX='your_user'
-        # export TITAN_DEFAULT_TEMPLATE='your_preferred_template'
+        # export TITAMU_URL='https://lab-rhevm.microsoft.rdu.com/ovirt-engine/api'
+        # export TITAMU_USERNAME='adminuser@your_domain'
+        # export TITAMU_PASSWORD='password'
+        # export TITAMU_CA_FILE='ca.pem'
+        # export TITAMU_VM_PREFIX='your_user'
+        # export TITAMU_DEFAULT_TEMPLATE='your_preferred_template'
         env_dict = environ
-        self.url = env_dict.get('TITAN_URL')
-        self.username = env_dict.get('TITAN_USERNAME')
-        self.password = env_dict.get('TITAN_PASSWORD')
-        self.ca_file = env_dict.get('TITAN_CA_FILE')
+        self.url = env_dict.get('TITAMU_URL')
+        self.username = env_dict.get('TITAMU_USERNAME')
+        self.password = env_dict.get('TITAMU_PASSWORD')
+        self.ca_file = env_dict.get('TITAMU_CA_FILE')
         self.debug = True
+        if self.url == '' or self.username == '' or self.password == '' or self.ca_file == '':
+            messages = '''
+Please make sure you set TITAMU environment variables in your bash profile
+export TITAMU_URL=<RHV URL>
+export TITAMU_USERNAME=<username>@<domainname>
+export TITAMU_PASSWORD=<password>
+export TITAMU_CA_FILE=<RHV CA FILE>
+export TITAMU_DEFAULT_TEMPLATE=<Your preferred template>
+export TITAMU_VM_PREFIX=<Usually your krb5 username>
+'''
+            print messages
+            sys.exit(1)
 
     def connect(self):
         return sdk.Connection(url=self.url,

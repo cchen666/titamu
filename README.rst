@@ -24,14 +24,14 @@ or
 
 ::
 
-   export TITAN_URL='https://lab-rhevm.microsoft.rdu.com/ovirt-engine/api'
-   export TITAN_USERNAME='adminuser@your_domain'
-   export TITAN_PASSWORD='password'
-   export TITAN_CA_FILE='ca.pem'
-   export TITAN_VM_PREFIX='your_vm_prefix'
-   export TITAN_DEFAULT_TEMPLATE='your_preferred_template'
+   export TITAMU_URL='https://lab-rhevm.microsoft.rdu.com/ovirt-engine/api'
+   export TITAMU_USERNAME='adminuser@your_domain'
+   export TITAMU_PASSWORD='password'
+   export TITAMU_CA_FILE='ca.pem'
+   export TITAMU_VM_PREFIX='your_vm_prefix'
+   export TITAMU_DEFAULT_TEMPLATE='your_preferred_template'
 
-4. Download ca.pem. Save the ca.pem to your preferred path and set TITAN_CA_FILE correctly. For example, export TITAN_CA_FILE='/root/ca.pem'
+4. Download ca.pem. Save the ca.pem to your preferred path and set TITAMU_CA_FILE correctly. For example, export TITAMU_CA_FILE='/root/ca.pem'
 
 ::
 
@@ -51,7 +51,7 @@ or
    optional arguments:
      -h, --help            show this help message and exit
 
-   # To list the VMs which filters by TITAN_VM_PREFIX environment variable
+   # To list the VMs which filters by TITAMU_VM_PREFIX environment variable
    $ titamu list
    +--------------------------------------+--------------------------+--------+----------------+-----------------------------+
    | ID                                   | Name                     | Status | Networks       | Comment                     |

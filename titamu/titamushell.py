@@ -18,7 +18,7 @@ def main():
         # Every operations that are related to template must start with "temp"
         tempops = TempOps()
         parser_templist = subparsers.add_parser('temp-list')
-        parser_templist.add_argument('-p', '--prefix', default=environ.get("TITAN_PREFIX"), dest='prefix')
+        parser_templist.add_argument('-p', '--prefix', default=environ.get("TITAMU_PREFIX"), dest='prefix')
         parser_templist.set_defaults(func=tempops.temp_list)
 
     elif argv[1].startswith('net'):
@@ -40,7 +40,7 @@ def main():
     elif argv[1].startswith('disk'):
         diskops = DiskOps()
         parser_disklist = subparsers.add_parser('disk-list')
-        parser_disklist.add_argument('-p', '--prefix', default=environ.get("TITAN_PREFIX"), dest='prefix')
+        parser_disklist.add_argument('-p', '--prefix', default=environ.get("TITAMU_PREFIX"), dest='prefix')
         parser_disklist.add_argument('vm_name')
         parser_disklist.set_defaults(func=diskops.disk_list)
 
@@ -65,7 +65,7 @@ def main():
 
         # test
         parser_test = subparsers.add_parser('test')
-        parser_test.add_argument('-p', '--prefix', default=environ.get("TITAN_PREFIX"), dest='prefix')
+        parser_test.add_argument('-p', '--prefix', default=environ.get("TITAMU_PREFIX"), dest='prefix')
         parser_test.set_defaults(func=vmops.vm_list)
         # test
 
@@ -82,11 +82,11 @@ def main():
         parser_stop.set_defaults(func=vmops.vm_delete)
 
         parser_list = subparsers.add_parser('list')
-        parser_list.add_argument('-p', '--prefix', default=environ.get("TITAN_PREFIX"), dest='prefix')
+        parser_list.add_argument('-p', '--prefix', default=environ.get("TITAMU_PREFIX"), dest='prefix')
         parser_list.set_defaults(func=vmops.vm_list)
 
         parser_boot = subparsers.add_parser('boot')
-        parser_boot.add_argument('-t', '--template', default=environ.get("TITAN_DEFAULT_TEMPLATE"), dest='temp')
+        parser_boot.add_argument('-t', '--template', default=environ.get("TITAMU_DEFAULT_TEMPLATE"), dest='temp')
         parser_boot.add_argument('-c', '--comment', dest='vm_comment')
         parser_boot.add_argument('-r', '--raw', default='0', dest='vm_raw')
         parser_boot.add_argument('vm_name')

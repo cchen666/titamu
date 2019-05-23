@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='titamu',
-    version=0.2,
+    version=0.4,
     description=(
         'A command line tool to talk with RHV environment'
     ),

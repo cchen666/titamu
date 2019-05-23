@@ -22,7 +22,7 @@ class VmOps:
         if args.prefix is not None:
             search_prefix = 'name=' + args.prefix + '*'
         else:
-            search_prefix = 'name=' + environ.get('TITAN_VM_PREFIX') + '*'
+            search_prefix = 'name=' + environ.get('TITAMU_VM_PREFIX') + '*'
         try:
             # Get vm list by using vms_service
             vms = vms_service.list(
@@ -63,6 +63,8 @@ class VmOps:
             self.c.close()
         except sdk.Error as err:
             print ("Failed to start %s, %s" % (args.vm_name, str(err)))
+        except IndexError:
+            print "Error: No such VM %s" % args.vm_name
         else:
             print "The request of starting %s has been sent" % vm.name
 
@@ -78,6 +80,8 @@ class VmOps:
             self.c.close()
         except sdk.Error as err:
             print ("Failed to stop %s, %s" % (args.vm_name, str(err)))
+        except IndexError:
+            print "Error: No such VM %s" % args.vm_name
         else:
             print "The request of stopping %s has been sent" % vm.name
 
@@ -91,6 +95,8 @@ class VmOps:
             self.c.close()
         except sdk.Error as err:
             print ("Failed to delete %s, %s" % (args.vm_name, str(err)))
+        except IndexError:
+            print "Error: No such VM %s" % args.vm_name
         else:
             print "The request of deleting %s has been sent" % vm.name
 
@@ -105,6 +111,7 @@ class VmOps:
                 types.Vm(
                     name=args.vm_name,
                     cluster=types.Cluster(
+                        # A little bit dangerous as we hardcoded the cluster name as 'Default'
                         name='Default',
                     ),
                     template=types.Template(
@@ -142,7 +149,10 @@ class VmOps:
                         break
                 try:
                     vnc_url = "vnc://:%s@%s:%d" % (ticket.value, console.address, console.port)
-                    subprocess.call(["/usr/bin/open", vnc_url])
+                    if environ.get('TITAMU_DIST') == 'MacOS':
+                        # For MacOS we simply let OS open the VNC url.
+                        # TODO: Linux to be implemented
+                        subprocess.call(["/usr/bin/open", vnc_url])
                 except IOError as ioerr:
                     print "Can not open console.vv %s" % str(ioerr)
             elif console is None:
@@ -159,13 +169,17 @@ class VmOps:
                     with open(path, "w") as f:
                         f.write(console_vv)
                     try:
-                        subprocess.call('remote-viewer /tmp/console.vv 2>/dev/null', shell=True)
+                        if environ.get('TITAMU_DIST') == 'MacOS':
+                            # TODO: Linux to be implemented the same as VNC
+                            subprocess.call('remote-viewer /tmp/console.vv 2>/dev/null', shell=True)
                     except OSError as err:
                         print "Unable to locate remote-viewer application: %s" % err
 
             self.c.close()
         except sdk.Error as err:
             print str(err)
+        except IndexError:
+            print "Error: No such VM %s" % args.vm_name
 
     def vm_show(self, args):
         vms_service = self.c.system_service().vms_service()
@@ -177,6 +191,7 @@ class VmOps:
             # Print basic information
             rows.append(["Name", vm.name])
             rows.append(["ID", vm.id])
+            rows.append(["Status", str(vm.status).upper()])
             rows.append(["Memory", str(vm.memory / 1024 / 1024)+'M'])
             rows.append(["CPU", vm.cpu.topology.cores * vm.cpu.topology.sockets * vm.cpu.topology.threads])
             # Print Disk information
@@ -202,3 +217,5 @@ class VmOps:
             output.print_table()
         except sdk.Error as err:
             print str(err)
+        except IndexError:
+            print "Error: No such VM %s" % args.vm_name
