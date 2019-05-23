@@ -1,9 +1,11 @@
 README
 ------
 
-.. raw:: html
+|screencast|
 
-<a href="https://asciinema.org/a/247904?autoplay=1" target="_blank"><img src="https://asciinema.org/a/247904.png" width="835"/></a>
+.. |screencast| image:: https://asciinema.org/a/247904.png
+        :alt: BorgBackup Installation and Basic Usage
+        :target: https://asciinema.org/a/247904?autoplay=1&speed=2
 
 
 1. Install our code in virtualenv or user directory (not recommended to install the python package globally)
