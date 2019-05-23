@@ -2,6 +2,7 @@ import commands
 import time
 import random
 
+
 def loop_check(cmd, interval, retry, result):
     while retry > 0:
         if commands.getoutput(cmd).strip() == result:
