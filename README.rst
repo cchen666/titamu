@@ -21,11 +21,10 @@ or
    virtualenv ~/titamu
    cd ~/titamu
    pip install titamu
-   ln -s ~/titamu-rhv/titamu/bin/titamu /usr/local/bin/titamu
 
 2. pycurl (which is one of the dependencies) is not easy to install and the errors could be quite different for both MacOS and Linux. Use google :)
 
-3. Create a ``titamurc`` to load the environment variables. You can appened the content in your ~/.bash_profile (MacOS) or ~/.bashrc (Linux)
+3. Set necessary environment variables as followings. You can appened the content in your ~/.bash_profile (MacOS) or ~/.bashrc (Linux)
 
 ::
 
@@ -35,6 +34,7 @@ or
    export TITAMU_CA_FILE='ca.pem'
    export TITAMU_VM_PREFIX='your_vm_prefix'
    export TITAMU_DEFAULT_TEMPLATE='your_preferred_template'
+   export TITAMU_DIST='MacOS'
 
 4. Download ca.pem. Save the ca.pem to your preferred path and set TITAMU_CA_FILE correctly. For example, export TITAMU_CA_FILE='/root/ca.pem'
 
