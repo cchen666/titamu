@@ -14,7 +14,6 @@ class DiskOps:
         vms_service = self.c.system_service().vms_service()
         vm = vms_service.list(search=args.vm_name)[0]
         disk_attachments_service = vms_service.vm_service(vm.id).disk_attachments_service()
-        
 
         disk_attachments_service.add(
             types.DiskAttachment(

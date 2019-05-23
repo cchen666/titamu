@@ -67,13 +67,6 @@ class NetOps:
         #nics_service = vms_service.vm_service(vm.id).nics_service()
         #VmNicService got remove function
         # http://ovirt.github.io/ovirt-engine-sdk/master/services.m.html#ovirtsdk4.services.HostService.nics_service
-
-
-
-
-
-
-
         # nics_service.add method takes vnic profile id as the variable,
         # not the network id. So we have to find out the vnic profile id
         # by using network id

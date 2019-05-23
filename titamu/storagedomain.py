@@ -33,6 +33,6 @@ class StorageDomainOps:
             print "Failed to list disks, %s" % str(err)
 
     def sd_optimize(self, args):
-        # Compare args.request_size and free size for each SD
-        # return: First SD id that meets args.request_size
+        # TODO: Compare args.request_size and free size for each SD
+        # TODO: return: First SD id that meets args.request_size
         pass

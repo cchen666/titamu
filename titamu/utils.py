@@ -13,6 +13,7 @@ class Connect:
         # export TITAMU_CA_FILE='ca.pem'
         # export TITAMU_VM_PREFIX='your_user'
         # export TITAMU_DEFAULT_TEMPLATE='your_preferred_template'
+        # export TITAMU_DIST='MacOS'
         env_dict = environ
         self.url = env_dict.get('TITAMU_URL')
         self.username = env_dict.get('TITAMU_USERNAME')
